@@ -1,0 +1,20 @@
+pkg update
+pkg install wget
+wget -O frp.tar.gz https://github.com/fatedier/frp/releases/download/v0.37.1/frp_0.37.1_linux_arm.tar.gz
+tar -xzf frp.tar.gz
+cp frp_0.37.1_linux_arm/frpc /data/data/com.termux/files/usr/bin/
+3.配置 FRPC
+mkdir -p ~/.config/frpc
+nano ~/.config/frpc/frpc.ini
+4.设置 Termux
+mkdir -p ~/.termux/boot
+nano ~/.termux/boot/start-frpc.sh
+5.在 start-frpc.sh 文件中输入以下内容：
+#!/data/data/com.termux/files/usr/bin/sh
+sleep 30
+frpc -c ~/.config/frpc/frpc.ini
+6.保存并退出后，给予脚本执行权限
+chmod +x ~/.termux/boot/start-frpc.sh
+7.移动脚本到自启动目录
+cp ~/.termux/boot/start-frpc.sh $PREFIX/etc/profile.d/start-frpc.sh
+8.用AutoStart App Manager开机启动termux和 every proxy
